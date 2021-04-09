@@ -1,11 +1,8 @@
 import kotlinx.coroutines.*
 
-
-val tiempoDormir = 1000L
+const val tiempoDormir = 1000L
 
 fun main() {
-
-
     runBlocking {
         this.launch {
             funAsync()
@@ -16,11 +13,10 @@ fun main() {
             println("He terminado funAsync2")
         }
     }
-
 }
 
 private suspend fun funAsync(){
-    var result = GlobalScope.async{
+    val result = GlobalScope.async{
         repeat (10){
             println(it+1)
             delay(tiempoDormir)
@@ -30,7 +26,7 @@ private suspend fun funAsync(){
 }
 
 private suspend fun funAsync2(){
-    var result = GlobalScope.async{
+    val result = GlobalScope.async{
         for (it in 1..2){
             delay(tiempoDormir*5)
             println("Sigo Vivo")
