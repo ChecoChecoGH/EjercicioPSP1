@@ -1,25 +1,41 @@
 import kotlinx.coroutines.*
-import javax.xml.bind.JAXBElement
+
 
 val tiempoDormir = 1000L
 
 fun main() {
 
-    println("Hola")
 
-    //var result = GlobalScope.launch{
-        repeat (10){
-            if(it%5 == 0){
-               println("Sigo Vivo")
-            }
-            println(it)
-            //delay(tiempoDormir)
+    runBlocking {
+        this.launch {
+            funAsync()
+            println("He terminado funAsync1")
         }
-    //}
-    //result.await()
-    //GlobalScope.launch {
-        println("He terminado")
-    //}
+        this.launch {
+            funAsync2()
+            println("He terminado funAsync2")
+        }
+    }
 
+}
+
+private suspend fun funAsync(){
+    var result = GlobalScope.async{
+        repeat (10){
+            println(it+1)
+            delay(tiempoDormir)
+        }
+    }
+    result.await()
+}
+
+private suspend fun funAsync2(){
+    var result = GlobalScope.async{
+        for (it in 1..2){
+            delay(tiempoDormir*5)
+            println("Sigo Vivo")
+        }
+    }
+    result.await()
 }
 
